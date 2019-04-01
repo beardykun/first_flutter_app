@@ -17,7 +17,6 @@ class MySecondDartScreenState extends State<MySecondDartScreen> {
   @override
   void initState() {
     super.initState();
-
     loadData();
   }
 
@@ -25,10 +24,7 @@ class MySecondDartScreenState extends State<MySecondDartScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("SecondPage")),
-      body: ListView.builder(itemCount: _widgets.length,
-      itemBuilder: (BuildContext context, int position){
-        return getRow(position);
-      },),
+      body: getBody()
     );
   }
 
@@ -36,6 +32,21 @@ class MySecondDartScreenState extends State<MySecondDartScreen> {
   return Padding(padding: EdgeInsets.all(10.0),
   child: Text("Row ${_widgets[position]["title"]}"),);
   }
+
+  getBody(){
+    if(_widgets.length == 0){
+      return Center(child: CircularProgressIndicator(),);
+    }else{
+      return getListView();
+    }
+  }
+
+  getListView(){
+    return ListView.builder(itemCount: _widgets.length,
+      itemBuilder: (BuildContext context, int position){
+        return getRow(position);
+      },);
+}
 
   loadData() async{
     String dataUrl = "https://jsonplaceholder.typicode.com/posts";
